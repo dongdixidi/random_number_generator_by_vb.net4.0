@@ -9,13 +9,17 @@ Public Class Form1
     Dim temp As String
     Dim final As String
     Dim generate As Boolean
+    Dim first_in_flag As Boolean
+    Dim not_show As Boolean
+    Dim f2 As Form3
 
     Private Sub Label3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Label3.Click
 
     End Sub
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
+        first_in_flag = True
+        not_show = False
     End Sub
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
@@ -88,8 +92,28 @@ Public Class Form1
     End Sub
 
     Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
+
+
         Clipboard.Clear()
         Clipboard.SetText(RichTextBox1.Text)
-        MsgBox("生成框内内容已复制至剪切板，在目标位置粘贴即可")
+        If first_in_flag Then
+            f2 = New Form3
+            f2.Visible = False
+            first_in_flag = False
+            'f2.Visible = True
+            f2.ShowDialog()
+            'Me.Hide()
+            not_show = f2.Check_stat
+        Else
+            If (not_show = True) Then
+                f2.Visible = False
+            Else
+                f2.ShowDialog()
+                not_show = f2.Check_stat
+            End If
+        End If
+
+        'f2.Show()
+        'MsgBox("生成框内内容已复制至剪切板，在目标位置粘贴即可")
     End Sub
 End Class
